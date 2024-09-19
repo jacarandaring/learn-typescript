@@ -1,28 +1,55 @@
 # learn-typescript
 
-인프런의 [타입스크립트 입문 - 기초부터 실전까지](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&utm_source=blog&utm_medium=githubio&utm_campaign=captianpangyo&utm_term=banner) 온라인 강의 리포지토리입니다.
+인프런의 [타입스크립트 입문 - 기초부터 실전까지](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&utm_source=blog&utm_medium=githubio&utm_campaign=captianpangyo&utm_term=banner) 온라인 강의 수강한 내용 정리 레포지토리
 
-[![typescript-beginner](https://joshua1988.github.io/images/posts/web/inflearn/typescript-beginner-kor.png)](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&utm_source=blog&utm_medium=githubio&utm_campaign=captianpangyo&utm_term=banner)
+## About TS
+**Typed JavaScript** : 자바스크립트에 타입 부여한 언어
+- 자바스크립트와 다르게 컴파일 필요
+- 장점 = **intellisense**
+  1. 코드 작성 중 필드명 자동완성
+  2. 타입에서 제공하는 기본 속성 활용 가능
+    ```
+  sum(a: number, b: number): number {
+    return a+b;
+  }
+  const result = sum(10, 20);  // result: number
+  result.toLocaleString();     // number타입에서 제공하는 속성 자동완성됨
+    ```
+### 변수/함수 타입
+**Type Annotation**(타입 표기) : `:` 이용해서 JS 코드에 타입 정의
+```
+const {변수명}: {타입} = {초기값};
+function {함수명}({파라미터명}: {타입}): {리턴타입} {...};
+```
 
-## 개발 환경
+#### 기본 타입
+1. string
+2. number
+3. boolean
+4. Array
+5. any
+6. void
+   - 함수의 리턴타입 정하지 않을 때 사용 (5.any 아님)
+7. tuple
+   - 모든 요소의 타입이 정해진 길이 고정 배열
+    ```
+    const address: [string, number] = ['gangnam', 100];
+    ```
+8. enum
+   - 상수 집합
+    ```
+    enum Avengers { Capt = 2, IronMan, Thor }
+    let hero: Avengers = Avengers[2]; // Capt // 인덱스 임의 지정 가능
+    let hero: Avengers = Avengers[4]; // Thor
+    ```
+9. never
+    - 함수의 끝에 절대 도달하지 않음
+    ```
+    function neverEnd(): never {
+    	while (true) {};
+    }
+    ```
+#### 함수 타입
 
-- [Chrome](https://www.google.com/intl/ko/chrome/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Node.js LTS 버전(v10.x 이상)](https://nodejs.org/ko/)
-- [Git](https://git-scm.com/downloads)
 
-💡 참고 사항 : 수업에서는 VSCode를 기준으로 설명합니다. 별도로 선호하시는 IDE가 있다면 그걸 쓰셔도 괜찮습니다 😄
 
-## VSCode 플러그인 목록
-
-- 색 테마 : [Night Owl](https://marketplace.visualstudio.com/items?itemName=sdras.night-owl)
-- 파일 아이콘 테마 : [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)
-- 문법 검사 : ESLint, [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint)
-- 실습 환경 보조 : [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-- 기타
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager), [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag), [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens), [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings), [Jetbrains IDE Keymap](https://marketplace.visualstudio.com/items?itemName=isudox.vscode-jetbrains-keybindings) 등
-
-## License & Copyright
-
-**Copyright © 2020 Captain Pangyo**
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.
