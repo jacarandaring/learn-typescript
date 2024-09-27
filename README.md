@@ -61,7 +61,20 @@ function {함수명}({파라미터명}: {타입}): {리턴타입} {...};
       console.log('hello'); // --==>> OK
       console.log('hello', 'world');
       ```
-
-
+    - **rest 문법**: 파라미터 개수 유동적으로 설정
+      ```
+      function sum(a: number, ...rest: number[]): number {
+          const total = 0;
+          for (let key in rest) {
+      	    total += key;
+          }
+          return a + total;
+      }
+      ```
+      - cf. rest 문법 VS spread 문법
+        |       | spread      | rest  |
+        | :---: |-------------| ----- |
+        | 개념   | `펼치다` 기존 객체/배열 변동없이 하위 항목 모두 설정 | `나머지` 0, 1, ... 특정 인덱스값 외 나머지 |
+        | 사용   | 객체, 배열    | 객체, 배열, 함수 파라미터 |
 
 
