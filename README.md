@@ -77,4 +77,45 @@ function {함수명}({파라미터명}: {타입}): {리턴타입} {...};
         | 개념   | `펼치다` 기존 객체/배열 변동없이 하위 항목 모두 설정 | `나머지` 0, 1, ... 특정 인덱스값 외 나머지 |
         | 사용   | 객체, 배열    | 객체, 배열, 함수 파라미터 |
 
+#### 연산자를 이용한 타입 정의
+```
+interface Person {
+	name: string; // 공통 속성
+	age: number;
+}
+interface Developer {
+	name: string; // 공통 속성
+	skill: string;
+}
+```
+1. **Union 타입** = 교집합 `|` = 공통 속성에만 접근 가능
+   ```
+   function askSomeone(someone: Person | Developer) {
+		someone.name
+   	// someone.age
+   	// someone.skill
+   } 
+   ```
+   - **Type Guard** 통해서 Union 타입에서 특정 가능
+     ```
+     function whoisit(someone: Person | Developer) {
+		if (someone.name === '개발자') {
+     		// Developer
+     		console.log(someone.skill); // name, skill 자동완성
+     	} else {
+     		console.log(someone.age); // name, age 자동완성
+     	}
+     }
+     ```
+2. **Intersection 타입** = 합집합 `&` = 모든 속성에 접근 가능
+   ```
+   function askSomeone(someone: Person & Developer) {
+		someone.name
+   	someone.age
+   	someone.skill
+   } 
+   ```
+
+
+
 
