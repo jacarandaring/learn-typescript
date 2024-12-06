@@ -37,10 +37,18 @@ function {함수명}({파라미터명}: {타입}): {리턴타입} {...};
     ```
 8. enum
    - 상수 집합
+	```
+ 	enum Shoes {
+		Nike = '나이키',
+		Adidas = '아디다스',
+	}
+	const myShoes = Shoes.Nike; // -> '나이키'
+ 	```
     ```
-    enum Avengers { Capt = 2, IronMan, Thor }
-    let hero: Avengers = Avengers[2]; // Capt // 인덱스 임의 지정 가능
-    let hero: Avengers = Avengers[4]; // Thor
+	enum Avengers { Capt, IronMan, Thor }	  // 초기화하지 않은 경우 숫자형 (0부터 autoincreasing)
+    enum Avengers { Capt = 2, IronMan, Thor } // 인덱스 임의 지정 가능
+    let hero: Avengers = Avengers[2];	  // -> Capt
+    let hero: Avengers = Avengers[4];	  // -> Thor
     ```
 9. never
     - 함수의 끝에 절대 도달하지 않음
@@ -99,7 +107,7 @@ interface Developer {
    - **Type Guard** 통해서 Union 타입에서 특정 가능
      ```
      function whoisit(someone: Person | Developer) {
-		if (someone.name === '개발자') {
+     	if (someone.name === '개발자') {
      		// Developer
      		console.log(someone.skill); // name, skill 자동완성
      	} else {
@@ -110,12 +118,28 @@ interface Developer {
 2. **Intersection 타입** = 합집합 `&` = 모든 속성에 접근 가능
    ```
    function askSomeone(someone: Person & Developer) {
-		someone.name
+   	someone.name
    	someone.age
    	someone.skill
    } 
    ```
-
-
+#### Class
+- TypeScript에서 Class는 `Syntatic Sugar` 기능적으로 추가/변경되는 내용 없음
+- 특징
+  1. 생성자 함수 constructor() 사용 → JS와 공통점
+  2. 생성자 함수 파라미터의 타입 정의
+  3. 멤버변수, 접근 범위의 정의 → JAVA와 공통점
+  ```
+  	Class Person {
+		private name: string; // #3
+  		public age: number;
+  		readonly log: string;
+  		constructor(name: string, age: number) { // #1, #2
+  			this.name = name;
+  			this.age = age;
+  		}
+  	}
+  	const seho = new Person('세호', 30);
+  ```
 
 
