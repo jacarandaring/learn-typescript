@@ -104,7 +104,7 @@ interface Developer {
    	// someone.skill
    } 
    ```
-   - **Type Guard** 통해서 Union 타입에서 특정 가능
+   - **타입 가드** 통해서 Union 타입 중에서 특정 가능
      ```
      function whoisit(someone: Person | Developer) {
      	if (someone.name === '개발자') {
@@ -141,5 +141,64 @@ interface Developer {
   	}
   	const seho = new Person('세호', 30);
   ```
+### 타입 추론
+- 타입을 따로 지정하지 않아도 변수 선언/초기화, 인자 기본값, 함수 반환값 등 설정할 때 타입 추론 발생
+- **Duck Typing** 또는 **Structural Subtyping** 지향 : 값의 형태에 기반하는 추론
+	- \[방식1\] **Best Common Type**: 작성된 표현식 기준으로 가장 근접한 타입으로 추론하는 알고리즘
+	- \[방식2\] **Contextual Typing**: 코드상의 문맥을 기준으로 추론하는 알고리즘
+	  ```
+	  // 함수의 타입 추론하기 위해 window.onmousedown의 타입 검사 => 마우스 이벤트와 연관이 있다는 추론
+		window.onmousedown = function(mouseEvent) {
+		  console.log(mouseEvent.button);   // -> OK
+		  console.log(mouseEvent.kangaroo); // -> 해당하는 속성 없음
+		};
+	  ```
+	  ```
+	  // 함수의 타입 추론하기 위해 window.onscroll의 타입 검사 => 파라미터 uiEvent는 UIEvent 객체로 추론
+		window.onscroll = function(uiEvent) {
+		  console.log(uiEvent.button); // -> 해당하는 속성 없음
+		}
+	  // but 변수에 할당시 타입 추론이 어렵기 때문에 오류 미발생
+	  // (tsconfig.json 파일에 noImplicitAny:false 설정시 오류 발생) 
+		const handler = function(uiEvent) {
+		  console.log(uiEvent.button); // -> **OK**
+		}
+	  ```
+### 타입 단언
+- 개발자가 직접 타입 지정 **캐스팅**
+- `as` 키워드 이용
+  ```
+  /* DOM API 조작할 때 많이 사용 */
+	const div = document.querySelector('div') as HTMLDivElement;
+	div.innerText;
+  ```
+### 타입 가드
+- 여러 타입 중 원하는 타입으로 좁혀내기
+- \[방식1\] `typeof`, `instanceof` 연산자 이용
+  ```
+  // type Age = 'string' | 'number'
+  function getAge(age: Age) {
+  	age.length;	// 에러 발생
+  	if (typeof age === 'string') {
+  		age.length; // 정상 동작
+  	}
+  }
+  ```
+- \[방식2\] 커스텀 타입 가드 함수 이용 - 여러 객체 타입을 하나로 좁힐때 효과적
+  ```
+  // type Age = 'string' | 'number'
+  function isString(age: string | number):age is string {
+  	return typeof age === 'string';
+  }
+  function getAge(age: Age) {
+  	age.length;	// 에러 발생
+  	if (isString(age)) {
+  		age.length; // 정상 동작
+  	}
+  }
+  ```
+### 타입 호환
+
+### 타입 모듈화
 
 
