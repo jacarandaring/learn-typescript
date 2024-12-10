@@ -104,7 +104,7 @@ interface Developer {
    	// someone.skill
    } 
    ```
-   - **타입 가드** 통해서 Union 타입 중에서 특정 가능
+   - **[타입 가드](https://github.com/jacarandaring/learn-typescript/blob/master/README.md#타입-가드)** 통해서 Union 타입 중에서 특정 가능
      ```
      function whoisit(someone: Person | Developer) {
      	if (someone.name === '개발자') {
