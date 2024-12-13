@@ -141,6 +141,29 @@ interface Developer {
   	}
   	const seho = new Person('세호', 30);
   ```
+#### Generic
+- 타입을 함수의 파라미터처럼 선언하는 방식
+- 제네릭 인터페이스/클래스 생성 가능 (단 enum, namespace는 제네릭으로 생성 불가)
+- API Response 규격 설정할 때 가장 많이 사용
+  ```
+  type ApiResponse<Data> = {
+	data: Data;
+  	isError: boolean;
+  };
+  const response: ApiResponse<{ name: string; age: number }> = {
+	data: { name: 'name', age: 28 },
+  	isError: false,
+  };
+  ```
+- 제네릭으로 제약조건 설정 가능
+  ```
+  function getProperty<T, O extends keyof T>(obj: T, key: O) {
+    return obj[key];
+  }
+  const obj = { a: 1, b: 2, c: 3 };
+  getProperty(obj, 'a'); // -> OK
+  getProperty(obj, 'z'); // -> 해당하는 속성 없음
+  ```
 ### 타입 추론
 - 타입을 따로 지정하지 않아도 변수 선언/초기화, 인자 기본값, 함수 반환값 등 설정할 때 타입 추론 발생
 - **Duck Typing** 또는 **Structural Subtyping** 지향 : 값의 형태에 기반하는 추론
