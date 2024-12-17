@@ -142,21 +142,42 @@ interface Developer {
   	const seho = new Person('세호', 30);
   ```
 #### Generic
-- 타입을 함수의 파라미터처럼 선언하는 방식
+- 타입을 호출부에서 파라미터처럼 설정 **→ 타입에 유연하게 처리**
+  - 불필요한 오버로딩, 인터페이스 선언 등의 문제 해결
+  - Union 타입일 때 여러 타입에서 공통 제공하는 빌트인함수만 사용 가능한 문제 해결
 - 제네릭 인터페이스/클래스 생성 가능 (단 enum, namespace는 제네릭으로 생성 불가)
 - API Response 규격 설정할 때 가장 많이 사용
   ```
   type ApiResponse<Data> = {
-	data: Data;
+  	data: Data;
   	isError: boolean;
   };
   const response: ApiResponse<{ name: string; age: number }> = {
-	data: { name: 'name', age: 28 },
+  	data: { name: 'name', age: 28 },
   	isError: false,
   };
   ```
 - 제네릭으로 제약조건 설정 가능
   ```
+  function logLength<T>(text: T): T {
+    console.log(text.length); // -> Error 어떤 타입이 설정될지 불확실하여 length 메소드 제공 여부 알 수 없음
+    return text;
+  }
+  // 1. 추론 가능하도록 설정
+  function logLength<T>(text: T[]): T[] {
+    console.log(text.length); // -> OK
+    return text;
+  }
+  // 2. 정의된 타입 상속(extends)
+  interface LengthType {
+    length: number;
+  }
+  function logLength<T extends LengthType>(text: T): T {
+    console.log(text.length); // -> OK LengthType에 설정된 속성만 있으면 된다
+	console.log({ length: 10 });
+	return text;
+  }
+	// 3. 정의된 타입의 키만 설정(keyof)
   function getProperty<T, O extends keyof T>(obj: T, key: O) {
     return obj[key];
   }
