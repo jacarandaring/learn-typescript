@@ -213,8 +213,8 @@ interface Developer {
 - `as` 키워드 이용
   ```
   /* DOM API 조작할 때 많이 사용 */
-	const div = document.querySelector('div') as HTMLDivElement;
-	div.innerText;
+  const div = document.querySelector('div') as HTMLDivElement;
+  div.innerText;
   ```
 ### 타입 가드
 - 여러 타입 중 원하는 타입으로 좁혀내기
@@ -241,7 +241,24 @@ interface Developer {
   	}
   }
   ```
-### 타입 호환
+### 타입 호환 (Type Compatibility)
+- **구조적 타이핑(structural typing)**에 따라 구조적인 관점에서 내부 속성/타입의 호환성 체크
+- ← JS: 기본적으로 객체 리터럴이나 익명함수 등을 사용
+```
+interface Avengers {
+  name: string;
+}
+let capt = { name: "Captain", location: "Pangyo" };
+
+let hero: Avengers;
+hero = capt;  // 가능 <-name 속성
+console.log(hero);
+
+function assemble(a: Avengers) {
+  console.log("어벤져스 모여라", a.name);
+}
+assemble(capt); // 가능 <-name 속성
+```
 
 ### 타입 모듈화
 
