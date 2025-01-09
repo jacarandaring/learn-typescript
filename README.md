@@ -242,24 +242,56 @@ interface Developer {
   }
   ```
 ### 타입 호환 (Type Compatibility)
-- **구조적 타이핑(structural typing)**에 따라 구조적인 관점에서 내부 속성/타입의 호환성 체크
-- ← JS: 기본적으로 객체 리터럴이나 익명함수 등을 사용
-```
-interface Avengers {
-  name: string;
-}
-let capt = { name: "Captain", location: "Pangyo" };
+- **구조적 타이핑(structural typing)** 에 따라 구조적인 관점에서 동일한 속성 있는 경우 타입 호환
+  ← JS: 기본적으로 객체 리터럴이나 익명함수 등을 사용
+  - **구조적 크기가 큰 인터페이스/클래스에 할당하는 경우 호환 OK**
+	```
+	let capt = {
+	    name: "Captain",
+	    location: "Pangyo",
+	};
+	
+	interface Avengers {
+	  name: string;
+	}
+	let hero: Avengers;
+	hero = capt;	// 가능 <-name 속성
+	
+	function assemble(a: Avengers) {
+	  console.log("어벤져스 모여라", a.name);
+	}
+	assemble(capt); // 가능 <-name 속성
+	
+	interface Basecamp {
+	  name: string;
+	  type: string;
+	}
+	let base: Basecamp;
+	// base = capt;	// 불가능 <-type 속성
+	```
+- Enum 타입 호환 : Number 타입과는 호환되지만, Enum끼리는 호환되지 않음
+- Class 타입 호환 : 속성만 비교 / 스태틱 멤버(static member), 생성자 제외
+- Generic 타입 호환 : <T>가 속성에 할당된 경우 타입 비교
+  ```
+  interface Empty<T> {
+  	// 빈 로직
+  }
+  const empty1: Empty<string>;
+  const empty2: Empty<number>;
+  empty1 = empty2;
+  empty2 = empty1;						// --==>> 호환에 문제 없음
 
-let hero: Avengers;
-hero = capt;  // 가능 <-name 속성
-console.log(hero);
-
-function assemble(a: Avengers) {
-  console.log("어벤져스 모여라", a.name);
-}
-assemble(capt); // 가능 <-name 속성
-```
-
+  interface NotEmpty<T> {
+  	data: T;
+  }
+  const notEmpty1: NotEmpty<string>;
+  const notEmpty2: NotEmpty<number>;
+  // notEmpty1 = notEmpty2;
+  // notEmpty2 = notEmpty1;		// --==>> 호환 불가능
+  ```
+- 컴파일 시점에 타입 추론 불가능한 경우 일단 안전하다고 보는 특성이 있음
+  - **Soundness**
+    > 들리지 않는다(it is said to not be sound)
 ### 타입 모듈화
 
 
