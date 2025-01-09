@@ -279,7 +279,7 @@ interface Developer {
   const empty1: Empty<string>;
   const empty2: Empty<number>;
   empty1 = empty2;
-  empty2 = empty1;						// --==>> 호환에 문제 없음
+  empty2 = empty1;				// --==>> 호환에 문제 없음
 
   interface NotEmpty<T> {
   	data: T;
@@ -293,5 +293,22 @@ interface Developer {
   - **Soundness**
     > 들리지 않는다(it is said to not be sound)
 ### 타입 모듈화
-
+- 자바스크립트 ES6+ Modules와 비슷 : 자체 유효 범위를 가지며, import/export 키워드 사용 필요
+  - cf. 자바스크립트 ES6 이전: asynchronous module definition(AMD), CommonJS 등 모듈 시스템 사용
+  ```
+  -- apps.ts
+  import { Todo } from './types';
+  
+  const item: Todo = {
+  	title; '오늘의 할 일',
+  	checked: false,
+  }
+  ```
+  -- types.ts
+  export interface Todo {
+  	title: string;
+  	checked: boolean;
+  }
+  ```
+  ```
 
